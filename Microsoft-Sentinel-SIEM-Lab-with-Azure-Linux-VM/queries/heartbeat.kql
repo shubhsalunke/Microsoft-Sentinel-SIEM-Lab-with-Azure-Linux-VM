@@ -1,0 +1,19 @@
+// ==========================================
+// Heartbeat Verification Queries
+// ==========================================
+
+// 1. Get the 10 most recent agent heartbeats
+// Verifies that the Azure Monitor Agent (AMA) is active and communicating.
+Heartbeat
+| sort by TimeGenerated desc
+| take 10
+
+// 2. Summarize the last heartbeat time for each virtual machine
+Heartbeat
+| summarize LastHeartbeat = max(TimeGenerated) by Computer, OSType, OSName, Version
+
+// 3. Health check: List machines that have not reported in the last 15 minutes
+Heartbeat
+| summarize LastHeartbeat = max(TimeGenerated) by Computer
+| where LastHeartbeat < ago(15m)
+| project Computer, LastHeartbeat, Status = "Offline / Unhealthy"

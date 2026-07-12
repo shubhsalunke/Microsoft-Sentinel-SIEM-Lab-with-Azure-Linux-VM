@@ -1,0 +1,34 @@
+// ==========================================
+// Authentication & SSH Event Audit Queries
+// ==========================================
+
+// 1. View all authentication logs (auth / authpriv facilities)
+Syslog
+| where Facility in~ ("auth", "authpriv")
+| sort by TimeGenerated desc
+| take 50
+
+// 2. Identify Failed SSH login attempts
+// Captures invalid passwords and non-existent usernames.
+Syslog
+| where Facility in~ ("auth", "authpriv")
+| where SyslogMessage has "failed" or SyslogMessage has "invalid user"
+| project TimeGenerated, Computer, ProcessName, SyslogMessage
+| sort by TimeGenerated desc
+
+// 3. Summarize failed login attempts by source IP address
+// Essential for identifying potential SSH brute-force attackers.
+Syslog
+| where Facility in~ ("auth", "authpriv")
+| where SyslogMessage has "failed"
+| extend SourceIP = extract(@"from ([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})", 1, SyslogMessage)
+| where isnotempty(SourceIP)
+| summarize FailureCount = count() by SourceIP, Computer
+| sort by FailureCount desc
+
+// 4. Track Successful SSH logins
+Syslog
+| where Facility in~ ("auth", "authpriv")
+| where SyslogMessage has "Accepted publickey" or SyslogMessage has "Accepted password" or SyslogMessage has "session opened"
+| project TimeGenerated, Computer, ProcessName, SyslogMessage
+| sort by TimeGenerated desc

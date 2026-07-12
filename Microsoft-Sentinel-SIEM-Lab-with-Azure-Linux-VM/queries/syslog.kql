@@ -1,0 +1,27 @@
+// ==========================================
+// General Syslog Investigation Queries
+// ==========================================
+
+// 1. Fetch 10 most recent syslog messages
+Syslog
+| sort by TimeGenerated desc
+| take 10
+
+// 2. Count syslog events grouped by Facility and Severity
+// Useful for analyzing which services generate the most noise or errors.
+Syslog
+| summarize EventCount = count() by Facility, SeverityLevel
+| sort by EventCount desc
+
+// 3. Monitor log volume over time (10-minute bins)
+// Helps identify spikes in activity or potential DoS/system issues.
+Syslog
+| summarize LogCount = count() by bin(TimeGenerated, 10m), Computer
+| render timechart
+
+// 4. Find all Error and Critical logs generated in the past 24 hours
+Syslog
+| where TimeGenerated > ago(24h)
+| where SeverityLevel in~ ("Error", "Critical", "Alert", "Emergency")
+| project TimeGenerated, Computer, ProcessName, SyslogMessage, SeverityLevel
+| sort by TimeGenerated desc

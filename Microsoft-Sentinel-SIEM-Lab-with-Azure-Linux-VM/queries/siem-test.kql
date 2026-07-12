@@ -1,0 +1,20 @@
+// ==========================================
+// Custom SIEM Test Verification Queries
+// ==========================================
+
+// 1. Find all log entries containing the test string "SIEM TEST"
+Syslog
+| where SyslogMessage contains "SIEM TEST"
+| sort by TimeGenerated desc
+
+// 2. Identify the source machine and facility for the SIEM test logs
+Syslog
+| where SyslogMessage contains "SIEM TEST"
+| project TimeGenerated, Computer, Facility, SeverityLevel, SyslogMessage
+| sort by TimeGenerated desc
+
+// 3. Count the number of SIEM test logs received in the last hour
+Syslog
+| where TimeGenerated > ago(1h)
+| where SyslogMessage contains "SIEM TEST"
+| summarize TotalTestLogs = count()
