@@ -9,19 +9,19 @@ This repository contains the configuration, queries, and documentation for setti
 
 ---
 
-## 🎯 Lab Objectives
+## Lab Objectives
 
 In this lab, you will learn how to:
-- 💻 **Provision Azure Infrastructure** (Linux VM, Log Analytics Workspace) using Azure CLI.
-- 🛡️ **Enable Microsoft Sentinel** on top of a Log Analytics Workspace.
-- ⚙️ **Deploy Azure Monitor Agent (AMA)** to automatically collect security logs from Linux.
-- 📋 **Create a Data Collection Rule (DCR)** to filter and route Syslog messages.
-- 📝 **Generate Custom Security Events** using the Linux command line.
-- 🔍 **Run Kusto Query Language (KQL)** queries to analyze heartbeats, login events, and custom syslog logs.
+- **Provision Azure Infrastructure** (Linux VM, Log Analytics Workspace) using Azure CLI.
+- **Enable Microsoft Sentinel** on top of a Log Analytics Workspace.
+- **Deploy Azure Monitor Agent (AMA)** to automatically collect security logs from Linux.
+- **Create a Data Collection Rule (DCR)** to filter and route Syslog messages.
+- **Generate Custom Security Events** using the Linux command line.
+- **Run Kusto Query Language (KQL)** queries to analyze heartbeats, login events, and custom syslog logs.
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 The system collects OS-level syslog and security events from the Linux VM, forwards them via the Azure Monitor Agent, parses them through Data Collection Rules, stores them in the Log Analytics Workspace, and analyzes them in Microsoft Sentinel.
 
@@ -50,7 +50,7 @@ For a deeper dive into the infrastructure details, see [docs/Architecture.md](do
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 Microsoft-Sentinel-SIEM-Lab/
@@ -73,7 +73,7 @@ Microsoft-Sentinel-SIEM-Lab/
 
 ---
 
-## 🚀 Step-by-Step Lab Setup
+## Step-by-Step Lab Setup
 
 ### Step 1: Login to Azure
 Authenticate your command line with your Azure subscription:
@@ -164,7 +164,7 @@ In the Azure Portal:
 
 ---
 
-## 🧪 Testing & Log Ingestion Verification
+## Testing & Log Ingestion Verification
 
 ### 1. Generate Test Logs on VM
 Run the following commands inside the SSH session to generate local syslog events:
@@ -202,21 +202,21 @@ In Microsoft Sentinel, open the **Logs** tab and execute these verification quer
 
 ---
 
-## 📊 Lab Status Dashboard
+## Lab Status Dashboard
 
 | Component | Status | Description |
 |---|---|---|
-| Azure VM | ✅ Active | VM deployed and reachable via SSH |
-| SSH Connection | ✅ Active | Secure shell access validated |
-| Azure Monitor Agent | ✅ Running | Agent installed and collecting metrics |
-| Log Analytics Workspace | ✅ Active | Data storage active and listening |
-| Microsoft Sentinel | ✅ Enabled | Threat detection dashboard active |
-| Data Collection Rule | ✅ Configured | DCR routes Syslog messages to workspace |
-| Heartbeat Logs | ✅ Ingesting | VM agent health reports successfully ingested |
-| Syslog Logs | ✅ Ingesting | OS level Syslog streaming functional |
-| SIEM Test Logs | ✅ Verified | Custom test strings queryable via KQL |
+| Azure VM | Active | VM deployed and reachable via SSH |
+| SSH Connection | Active | Secure shell access validated |
+| Azure Monitor Agent | Running | Agent installed and collecting metrics |
+| Log Analytics Workspace | Active | Data storage active and listening |
+| Microsoft Sentinel | Enabled | Threat detection dashboard active |
+| Data Collection Rule | Configured | DCR routes Syslog messages to workspace |
+| Heartbeat Logs | Ingesting | VM agent health reports successfully ingested |
+| Syslog Logs | Ingesting | OS level Syslog streaming functional |
+| SIEM Test Logs | Verified | Custom test strings queryable via KQL |
 
 ---
 
-## 📜 License
+## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
